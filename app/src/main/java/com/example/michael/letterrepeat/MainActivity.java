@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity{
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // small change
                 Toast.makeText(MainActivity.this, "Processing", Toast.LENGTH_SHORT).show(); // Test listener with toast.
                 // Process all the inputs and show the results!
                 ArrayList<String> results = new Processor().runProcessor(stringsList,lookbackNumber);
