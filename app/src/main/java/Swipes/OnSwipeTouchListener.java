@@ -68,10 +68,13 @@ public class OnSwipeTouchListener implements OnTouchListener {
         }
     }
 
-    public void onSwipeRight() {
+    public boolean onSwipeRight() {
+        return true;
+        //Toast.makeText(this, "Deleted String", Toast.LENGTH_SHORT).show();
     }
 
-    public void onSwipeLeft() {
+    public boolean onSwipeLeft() {
+        return true;
     }
 
     public void onSwipeTop() {

@@ -50,13 +50,15 @@ public class MainActivity extends AppCompatActivity{
                 stringsList.add(getResources().getStringArray(R.array.stringArray)[i-1]); // Set the initial string traits
                 addStringTextListener((EditText) v, i-1); // Add a listener to the EditText view if the input changes
                 // TODO: Make the touch listener work so you can delete items
-/*                v.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) { // Create swipe listener to delete items
-                    public void onSwipeRight() {
-                        layout.removeView(v);
+/*                boolean delete;
+                delete=v.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) { // Create swipe listener to delete items
+                    public boolean onSwipeRight() {
                         Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
-                    public void onSwipeLeft() {
+                    public boolean onSwipeLeft() {
                         Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show();
+                        return true;
                     }
                 });*/
             }
