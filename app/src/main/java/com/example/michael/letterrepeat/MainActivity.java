@@ -20,6 +20,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import Swipes.OnSwipeTouchListener;
+
 /**
  * Created by Michael on 2/2/2017.
  *
@@ -49,20 +51,10 @@ public class MainActivity extends AppCompatActivity{
             if (v instanceof EditText && i<=numberOfStrings) { // If this is an EditText element and its within the string section
                 stringsList.add(getResources().getStringArray(R.array.stringArray)[i-1]); // Set the initial string traits
                 addStringTextListener((EditText) v, i-1); // Add a listener to the EditText view if the input changes
-                // TODO: Make the touch listener work so you can delete items
-/*                boolean delete;
-                delete=v.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) { // Create swipe listener to delete items
-                    public boolean onSwipeRight() {
-                        Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                    public boolean onSwipeLeft() {
-                        Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });*/
+                v.setOnTouchListener(new MyOwnListener(MainActivity.this, i)); // Set a swipe listener on each string
             }
         }
+
         View lookbackInput = findViewById(R.id.lookback); // Get the lookback input
         addLookbackListener((EditText) lookbackInput); // Add a listener for lookback number input
         addRunButtonListener(); // Add a listener to the run button
@@ -90,6 +82,37 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
+    public class MyOwnListener extends OnSwipeTouchListener { // Create swipe listener to delete items; extends swipe listener for linear layouts
+        Context ctx; // Declare context
+        int index; // Declare which string we're looking at
+        public MyOwnListener(Context ctx, int index){
+            super(ctx); // Call the super class's constructor
+            this.index = index; // Set the index
+        }
+
+        @Override
+        public boolean onSwipeRight() { // If they swiped right
+            final LinearLayout layout = (LinearLayout)findViewById(R.id.activity_main); // Get the main activity's layout
+            View v = layout.getChildAt(index); // Get the current string that was swiped
+            layout.removeView(v); // Remove the view
+            numberOfStrings-=1; // Update the number of strings
+            stringsList.remove(index-1); // Remove this string from the array list
+            Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show(); // Show the user it was deleted
+            return true;
+        }
+
+        @Override
+        public boolean onSwipeLeft() {
+            final LinearLayout layout = (LinearLayout)findViewById(R.id.activity_main); // Get the main activity's layout
+            View v = layout.getChildAt(index); // Get the current string that was swiped
+            layout.removeView(v); // Remove the view
+            numberOfStrings-=1; // Update the number of strings
+            stringsList.remove(index-1); // Remove this string from the array list
+            Toast.makeText(MainActivity.this, "Deleted String", Toast.LENGTH_SHORT).show(); // Show the user it was deleted
+            return true;
+        }
+    };
 
     public void addStringTextListener(final EditText stringText, final int index){
 
